@@ -33,8 +33,9 @@ def extract_text(image_path):
     # Save denoised image to disk
     cv2.imwrite(f"denoised_{file_root}.jpg", image)
 
-    # Calculate the mean brightness of the image
-    mean_brightness = cv2.mean(image)[0] # 0th index is for brightness
+    # Calculate the mean brightness using a grayscale version of the image
+    gray_for_brightness = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    mean_brightness = cv2.mean(gray_for_brightness)[0]
     # Adjust alpha and beta based on mean brightness
     if mean_brightness < 100:
         alpha = 1.5     # --- increase contrast
